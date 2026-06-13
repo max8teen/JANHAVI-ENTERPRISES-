@@ -29,7 +29,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 import partsPoster from "@/assets/website_section.png";
 import robotImage from "@/assets/robo.webp";
@@ -110,6 +110,184 @@ const highlights = [
   "Cleaner installations with modern kitchen-friendly finishes",
 ];
 
+function ProductCarousel() {
+  // Clone first 4 at end + last 4 at start for infinite loop illusion
+  const VISIBLE_PC = 4;
+  const VISIBLE_MOBILE = 1;
+  const total = products.length;
+
+  // We render: [...last4, ...products, ...first4]
+  const cloned = [
+    ...products.slice(-VISIBLE_PC),
+    ...products,
+    ...products.slice(0, VISIBLE_PC),
+  ];
+
+  const trackRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  // real index into `products` (0-based)
+  const [index, setIndex] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(VISIBLE_PC);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStartX = useRef(0);
+  const dragDelta = useRef(0);
+  const autoTimer = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Detect mobile vs desktop
+  useEffect(() => {
+    const update = () => setVisibleCount(window.innerWidth < 1024 ? VISIBLE_MOBILE : VISIBLE_PC);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const offset = visibleCount === VISIBLE_PC ? VISIBLE_PC : VISIBLE_MOBILE;
+  // clonedIndex is position in cloned array = offset + realIndex
+  const clonedIndex = offset + index;
+
+  const getItemWidth = useCallback(() => {
+    if (!containerRef.current) return 0;
+    return containerRef.current.clientWidth / visibleCount;
+  }, [visibleCount]);
+
+  const applyTranslate = useCallback((idx: number, animate: boolean) => {
+    const track = trackRef.current;
+    if (!track) return;
+    track.style.transition = animate ? "transform 0.45s cubic-bezier(0.4,0,0.2,1)" : "none";
+    track.style.transform = `translateX(-${idx * getItemWidth()}px)`;
+  }, [getItemWidth]);
+
+  // Jump silently after transition ends to maintain infinite loop
+  const handleTransitionEnd = useCallback(() => {
+    setIsTransitioning(false);
+    const track = trackRef.current;
+    if (!track) return;
+    // If we went past end clones, jump to real start
+    if (index >= total) {
+      const newIdx = index - total;
+      setIndex(newIdx);
+      applyTranslate(offset + newIdx, false);
+    } else if (index < 0) {
+      const newIdx = index + total;
+      setIndex(newIdx);
+      applyTranslate(offset + newIdx, false);
+    }
+  }, [index, total, offset, applyTranslate]);
+
+  // Slide to a real index (may temporarily go into clones)
+  const slideTo = useCallback((newRealIndex: number) => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setIndex(newRealIndex);
+    applyTranslate(offset + newRealIndex, true);
+  }, [isTransitioning, offset, applyTranslate]);
+
+  const next = useCallback(() => slideTo(index + 1), [slideTo, index]);
+  const prev = useCallback(() => slideTo(index - 1), [slideTo, index]);
+
+  // Auto-swipe
+  useEffect(() => {
+    autoTimer.current = setInterval(next, 4000);
+    return () => { if (autoTimer.current) clearInterval(autoTimer.current); };
+  }, [next]);
+
+  const resetAuto = useCallback(() => {
+    if (autoTimer.current) clearInterval(autoTimer.current);
+    autoTimer.current = setInterval(next, 4000);
+  }, [next]);
+
+  // Apply translate whenever index or visibleCount changes (no animation on resize)
+  useEffect(() => {
+    applyTranslate(offset + index, false);
+  }, [visibleCount]); // eslint-disable-line
+
+  // Drag/swipe handlers
+  const onPointerDown = (e: React.PointerEvent) => {
+    setIsDragging(true);
+    dragStartX.current = e.clientX;
+    dragDelta.current = 0;
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+  };
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (!isDragging) return;
+    dragDelta.current = e.clientX - dragStartX.current;
+    const track = trackRef.current;
+    if (track) {
+      track.style.transition = "none";
+      track.style.transform = `translateX(${-(clonedIndex * getItemWidth()) - dragDelta.current * -1}px)`;
+    }
+  };
+  const onPointerUp = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    const threshold = getItemWidth() * 0.25;
+    if (dragDelta.current < -threshold) {
+      next(); resetAuto();
+    } else if (dragDelta.current > threshold) {
+      prev(); resetAuto();
+    } else {
+      applyTranslate(clonedIndex, true);
+    }
+  };
+
+  const itemWidth = `${100 / visibleCount}%`;
+
+  return (
+    <div ref={containerRef} className="relative w-full overflow-hidden select-none pb-10">
+      {/* Track */}
+      <div
+        ref={trackRef}
+        className="flex"
+        style={{ willChange: "transform" }}
+        onTransitionEnd={handleTransitionEnd}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerLeave={onPointerUp}
+      >
+        {cloned.map((product, i) => (
+          <div
+            key={`${product.name}-${i}`}
+            className="relative shrink-0"
+            style={{ width: itemWidth }}
+          >
+            <div className="relative mx-1 overflow-hidden" style={{ aspectRatio: "3/4" }}>
+              <img
+                src={product.image}
+                alt={product.name}
+                className="h-full w-full object-contain"
+                draggable={false}
+                loading="lazy"
+              />
+              {/* Name overlay at bottom of image */}
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-4 pb-4 pt-10">
+                <p className="text-base font-extrabold text-white">{product.name}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Dot indicators */}
+      <div className="mt-6 flex items-center justify-center gap-2">
+        {products.map((_, i) => (
+          <button
+            key={i}
+            aria-label={`Go to slide ${i + 1}`}
+            onClick={() => { slideTo(i); resetAuto(); }}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              ((index % total) + total) % total === i
+                ? "w-6 bg-primary"
+                : "w-2 bg-border"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export const Route = createFileRoute("/")({
   component: Index,
 });
@@ -175,52 +353,10 @@ function Index() {
           <div className="w-full px-4 py-16 sm:px-6 lg:px-8 xl:px-16 lg:py-24">
             <div>
               <p className="section-kicker">Water filter models</p>
-              <div className="mt-4 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-                <h2 className="section-title max-w-4xl">
-                  Scroll through a curated range of Aquaguard purifier models.
-                </h2>
-                <p className="max-w-xl text-sm leading-7 text-muted-foreground">
-                  Built as a horizontal showcase so visitors can compare design, use case, and
-                  placement style without the section feeling static.
-                </p>
-              </div>
-            </div>
-
-            <div className="product-scroller mt-10 flex gap-5 overflow-x-auto pb-4">
-              {products.map((product, index) => (
-                <article
-                  key={product.name}
-                  className="product-card group flex min-h-[31rem] w-[18.75rem] shrink-0 flex-col justify-between rounded-[calc(var(--radius)+18px)] border border-border/70 bg-card p-5 shadow-[var(--shadow-card)] transition-transform duration-500 hover:-translate-y-2"
-                  style={{ animationDelay: `${index * 80}ms` }}
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-                        {product.type}
-                      </span>
-                      <Star className="h-4 w-4 text-primary/60" />
-                    </div>
-                    <div className="mt-5 grid place-items-center rounded-[calc(var(--radius)+10px)] bg-secondary/45 p-6">
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="h-72 w-full object-contain transition-transform duration-500 group-hover:scale-105"
-                        loading="lazy"
-                      />
-                    </div>
-                  </div>
-                  <div className="mt-6">
-                    <h3 className="text-2xl font-extrabold text-foreground">{product.name}</h3>
-                    <p className="mt-3 text-sm leading-7 text-muted-foreground">{product.detail}</p>
-                    <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary">
-                      Ask for availability
-                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    </div>
-                  </div>
-                </article>
-              ))}
+              <h2 className="section-title mt-4">Aquaguard purifier models</h2>
             </div>
           </div>
+          <ProductCarousel />
         </section>
 
         <section className="border-b border-border/60 bg-background" id="services">
