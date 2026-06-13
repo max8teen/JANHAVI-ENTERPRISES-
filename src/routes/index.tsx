@@ -37,7 +37,6 @@ import robotImage from "@/assets/robo.webp";
 import storeImage from "@/assets/store.png";
 import wholeHouseImage from "@/assets/whole-house-filter.png";
 import heroDesktop from "@/assets/pc_hero.png";
-import heroMobile from "@/assets/mobile_hero.png";
 import waterFilterOne from "@/assets/water_filter_1.png";
 import waterFilterTwo from "@/assets/water_filter_2.png";
 import waterFilterThree from "@/assets/water_filter_3.png";
@@ -725,26 +724,49 @@ const heroFeatures = [
 
 function HeroSection() {
   return (
-    <section className="relative overflow-hidden bg-white">
-      {/* Full-width grid: left text col + right image col that goes to screen edge */}
-      <div className="hidden lg:grid lg:grid-cols-2 lg:items-stretch" style={{ minHeight: 560 }}>
+    <section className="relative w-full overflow-hidden" style={{ minHeight: "min(90vh, 680px)" }}>
 
-        {/* Left: text content — padded from left edge */}
-        <div className="flex flex-col justify-center py-20 px-6 sm:px-8 lg:pl-8 xl:pl-16 lg:pr-10">
+      {/* Background image — anchored to right so left side crops away as screen narrows */}
+      <img
+        src={heroDesktop}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover object-right"
+        loading="eager"
+      />
+
+      {/* Gradient overlay: strong white on the left (text legibility), fades to transparent toward right */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(to right, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.92) 28%, rgba(255,255,255,0.7) 48%, rgba(255,255,255,0.15) 65%, rgba(255,255,255,0) 80%)",
+        }}
+      />
+      {/* Bottom fade for mobile so content doesn't clash with the image bottom */}
+      <div
+        className="absolute inset-x-0 bottom-0 h-24 lg:hidden"
+        style={{ background: "linear-gradient(to top, rgba(255,255,255,0.85), transparent)" }}
+      />
+
+      {/* Content — sits on top of background */}
+      <div className="relative z-10 flex h-full items-center px-4 py-16 sm:px-6 sm:py-20 lg:px-8 xl:px-16" style={{ minHeight: "inherit" }}>
+        <div className="w-full max-w-xl">
+
           {/* Badge */}
-          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-widest text-[#1a56db]">
+          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-blue-100 bg-blue-50/90 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-widest text-[#1a56db] backdrop-blur-sm">
             <BadgeCheck className="h-3.5 w-3.5" />
             Eureka Forbes Authorised Service Centre
           </div>
 
           {/* Headline */}
-          <h1 className="mt-5 text-[2.4rem] font-extrabold leading-[1.1] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.2rem]">
+          <h1 className="mt-5 text-[2.2rem] font-extrabold leading-[1.1] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.4rem]">
             Delivering Purity,{" "}
             <span className="text-[#1a56db]">Ensuring Quality</span>
           </h1>
 
           {/* Sub-copy */}
-          <p className="mt-5 max-w-lg text-base leading-7 text-slate-500">
+          <p className="mt-5 text-base leading-7 text-slate-600">
             Janhavi Enterprises helps homes and businesses choose, install, and maintain
             Aquaguard and Eureka Forbes products with owner-led support, genuine filters, and
             fast local service across Ahilyanagar.
@@ -761,7 +783,7 @@ function HeroSection() {
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-6 py-3 text-sm font-bold text-slate-700 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-[#1a56db]/40 hover:text-[#1a56db] hover:shadow-md"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white/80 px-6 py-3 text-sm font-bold text-slate-700 shadow-sm backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-[#1a56db]/40 hover:text-[#1a56db] hover:shadow-md"
             >
               <Calendar className="h-4 w-4" />
               Book installation
@@ -769,11 +791,11 @@ function HeroSection() {
           </div>
 
           {/* Trust badges */}
-          <div className="mt-9 flex flex-wrap items-center gap-3">
+          <div className="mt-8 flex flex-wrap items-center gap-3">
             {heroFeatures.map(({ icon: Icon, title, bgColor, iconColor }) => (
               <div
                 key={title}
-                className="flex items-center gap-2.5 rounded-full border border-slate-100 bg-white px-3.5 py-2 shadow-sm"
+                className="flex items-center gap-2.5 rounded-full border border-slate-100 bg-white/85 px-3.5 py-2 shadow-sm backdrop-blur-sm"
               >
                 <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full ${bgColor}`}>
                   <Icon className={`h-4 w-4 ${iconColor}`} strokeWidth={2.2} />
@@ -783,83 +805,6 @@ function HeroSection() {
             ))}
           </div>
         </div>
-
-        {/* Right: hero image — flush to the right edge of the screen */}
-        <div className="relative overflow-hidden">
-          <img
-            src={heroDesktop}
-            alt="Janhavi Enterprises technician installing an Aquaguard water purifier"
-            className="absolute inset-0 h-full w-full object-cover object-left"
-            loading="eager"
-          />
-          {/* subtle left fade to merge with white bg */}
-          <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent" />
-        </div>
-      </div>
-
-      {/* Mobile layout */}
-      <div className="lg:hidden">
-        <div className="px-4 py-10 sm:px-6 lg:px-8 xl:px-16">
-          {/* Badge */}
-          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-widest text-[#1a56db]">
-            <BadgeCheck className="h-3.5 w-3.5" />
-            Eureka Forbes Authorised Service Centre
-          </div>
-
-          {/* Headline */}
-          <h1 className="mt-5 text-[2.2rem] font-extrabold leading-[1.1] tracking-tight text-slate-900">
-            Delivering Purity,{" "}
-            <span className="text-[#1a56db]">Ensuring Quality</span>
-          </h1>
-
-          {/* Sub-copy */}
-          <p className="mt-4 text-base leading-7 text-slate-500">
-            Janhavi Enterprises helps homes and businesses choose, install, and maintain
-            Aquaguard and Eureka Forbes products with owner-led support, genuine filters, and
-            fast local service across Ahilyanagar.
-          </p>
-
-          {/* CTA row */}
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <a
-              href="#services"
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#1a56db] px-6 py-3 text-sm font-bold text-white shadow-md"
-            >
-              <Wrench className="h-4 w-4" />
-              Explore services
-            </a>
-            <a
-              href="#contact"
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-6 py-3 text-sm font-bold text-slate-700 shadow-sm"
-            >
-              <Calendar className="h-4 w-4" />
-              Book installation
-            </a>
-          </div>
-
-          {/* Trust badges */}
-          <div className="mt-7 flex flex-wrap items-center gap-3">
-            {heroFeatures.map(({ icon: Icon, title, bgColor, iconColor }) => (
-              <div
-                key={title}
-                className="flex items-center gap-2.5 rounded-full border border-slate-100 bg-white px-3.5 py-2 shadow-sm"
-              >
-                <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full ${bgColor}`}>
-                  <Icon className={`h-4 w-4 ${iconColor}`} strokeWidth={2.2} />
-                </span>
-                <span className="text-[12.5px] font-semibold text-slate-700">{title}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Mobile hero image strip */}
-        <img
-          src={heroMobile}
-          alt="Janhavi Enterprises Aquaguard service"
-          className="h-56 w-full object-cover object-center sm:h-72"
-          loading="eager"
-        />
       </div>
     </section>
   );
