@@ -24,7 +24,6 @@ import {
   GraduationCap,
   Trophy,
   Send,
-  Sparkles,
   Star,
   Wrench,
   Menu,
@@ -35,7 +34,6 @@ import { useState } from "react";
 import partsPoster from "@/assets/website_section.png";
 import robotImage from "@/assets/robo.webp";
 import storeImage from "@/assets/store.png";
-import wholeHouseImage from "@/assets/whole-house-filter.png";
 import heroDesktop from "@/assets/pc_hero.png";
 import waterFilterOne from "@/assets/water_filter_1.png";
 import waterFilterTwo from "@/assets/water_filter_2.png";
@@ -291,108 +289,21 @@ function Index() {
           </div>
         </section>
 
-        <section className="border-b border-border/60 bg-background" id="parts">
-          <div className="w-full px-4 py-16 sm:px-6 lg:px-8 xl:px-16 lg:py-24">
-            <div className="grid gap-8 lg:grid-cols-[0.92fr_minmax(0,1.08fr)]">
-              <div className="space-y-6">
-                <div className="overflow-hidden rounded-[calc(var(--radius)+18px)] border border-border/70 bg-card shadow-[var(--shadow-card)]">
-                  <img
-                    src={wholeHouseImage}
-                    alt="Whole house water filter system parts layout"
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="overflow-hidden rounded-[calc(var(--radius)+18px)] border border-border/70 bg-card shadow-[var(--shadow-card)]">
-                  <img
-                    src={partsPoster}
-                    alt="Aquaguard filter awareness poster about genuine long-life filters"
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-              <div className="flex flex-col justify-center">
-                <p className="section-kicker">Parts and filter education</p>
-                <h2 className="section-title mt-4 max-w-4xl">
-                  Turn spare parts into a trust-building section, not just an image.
-                </h2>
-                <p className="mt-5 max-w-2xl lg:max-w-none text-base leading-8 text-muted-foreground">
-                  This section explains why genuine replacement parts, filter stages, and complete
-                  system care matter. It helps position Janhavi Enterprises as both a seller and a
-                  knowledgeable service provider, which is stronger for conversions and better for
-                  AI-driven search summaries.
-                </p>
-                <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                  {[
-                    {
-                      title: "Pre-filter",
-                      description: "Captures visible sediment before deeper treatment stages.",
-                      stage: "Stage 01",
-                      icon: Filter,
-                      accent: "from-sky-500/15 to-cyan-400/5",
-                      ring: "ring-sky-400/30",
-                      iconBg: "bg-sky-500/10 text-sky-600 dark:text-sky-300",
-                      meta: "Sediment · Rust · Sand",
-                    },
-                    {
-                      title: "Main filter",
-                      description: "Supports core purification performance and water quality.",
-                      stage: "Stage 02",
-                      icon: Droplets,
-                      accent: "from-primary/20 to-indigo-400/5",
-                      ring: "ring-primary/30",
-                      iconBg: "bg-primary/10 text-primary",
-                      meta: "RO · UV · UF core",
-                    },
-                    {
-                      title: "Post-filter",
-                      description: "Improves taste and finishing quality after purification.",
-                      stage: "Stage 03",
-                      icon: Sparkles,
-                      accent: "from-emerald-500/15 to-teal-400/5",
-                      ring: "ring-emerald-400/30",
-                      iconBg: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-300",
-                      meta: "Taste · Odour polish",
-                    },
-                    {
-                      title: "Pressure tank",
-                      description: "Supports balanced storage and dispensing in larger systems.",
-                      stage: "Stage 04",
-                      icon: PackageCheck,
-                      accent: "from-amber-500/15 to-orange-400/5",
-                      ring: "ring-amber-400/30",
-                      iconBg: "bg-amber-500/10 text-amber-600 dark:text-amber-300",
-                      meta: "Storage · Flow balance",
-                    },
-                  ].map(({ title, description, stage, icon: Icon, accent, ring, iconBg, meta }, idx) => (
-                    <article
-                      key={title}
-                      className={`group relative overflow-hidden rounded-[calc(var(--radius)+10px)] border border-border/70 bg-card p-5 shadow-[var(--shadow-card)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[var(--shadow-elevated)] ring-1 ${ring} ${idx % 2 === 1 ? "sm:translate-y-4" : ""}`}
-                    >
-                      <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${accent} opacity-70 transition-opacity duration-500 group-hover:opacity-100`} />
-                      <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-foreground/[0.03] blur-2xl transition-transform duration-700 group-hover:scale-125" />
-                      <div className="relative flex items-start justify-between gap-3">
-                        <div className={`grid h-11 w-11 place-items-center rounded-xl ${iconBg} transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6`}>
-                          <Icon className="h-5 w-5" />
-                        </div>
-                        <span className="rounded-full border border-border/70 bg-background/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground backdrop-blur">
-                          {stage}
-                        </span>
-                      </div>
-                      <h3 className="relative mt-5 text-lg font-extrabold tracking-tight text-foreground">
-                        {title}
-                      </h3>
-                      <p className="relative mt-2 text-sm leading-6 text-muted-foreground">{description}</p>
-                      <div className="relative mt-5 flex items-center gap-2 border-t border-border/60 pt-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-foreground/70">
-                        <span className="h-1.5 w-1.5 rounded-full bg-current opacity-70" />
-                        {meta}
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </div>
-            </div>
+        <section className="relative overflow-hidden border-b border-border/60" id="parts" style={{ minHeight: "min(70vh, 560px)" }}>
+          {/* Full-bleed background image — no padding, no margin */}
+          <img
+            src={partsPoster}
+            alt="Why water purification matters"
+            className="absolute inset-0 h-full w-full object-cover object-center"
+            loading="lazy"
+          />
+          {/* Dark overlay for text legibility */}
+          <div className="absolute inset-0 bg-black/55" />
+          {/* Centered heading only */}
+          <div className="relative z-10 flex h-full items-center justify-center px-4 py-24 text-center sm:px-6 sm:py-32" style={{ minHeight: "inherit" }}>
+            <h2 className="section-title text-white drop-shadow-lg" style={{ fontSize: "clamp(2rem, 5vw, 4rem)", lineHeight: 1.05 }}>
+              Why Water Purification<br className="hidden sm:block" /> Is Important
+            </h2>
           </div>
         </section>
 
