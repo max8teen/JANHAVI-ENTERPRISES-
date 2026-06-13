@@ -299,11 +299,16 @@ function Index() {
           />
           {/* Dark overlay for text legibility */}
           <div className="absolute inset-0 bg-black/55" />
-          {/* Centered heading only */}
-          <div className="relative z-10 flex h-full items-center justify-center px-4 py-24 text-center sm:px-6 sm:py-32" style={{ minHeight: "inherit" }}>
-            <h2 className="section-title text-white drop-shadow-lg" style={{ fontSize: "clamp(2rem, 5vw, 4rem)", lineHeight: 1.05 }}>
-              Why Water Purification<br className="hidden sm:block" /> Is Important
-            </h2>
+          {/* Heading — same layout style as services section */}
+          <div className="relative z-10 flex h-full items-end px-4 pb-12 sm:px-6 sm:pb-16 lg:px-8 xl:px-16 lg:pb-20" style={{ minHeight: "inherit" }}>
+            <div>
+              <p className="section-kicker" style={{ WebkitBackgroundClip: "unset", backgroundClip: "unset", backgroundImage: "none", color: "rgba(255,255,255,0.75)" }}>
+                Water purification
+              </p>
+              <h2 className="section-title mt-4 text-white drop-shadow-md">
+                Why Water Purification Is Important
+              </h2>
+            </div>
           </div>
         </section>
 
