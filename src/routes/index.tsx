@@ -125,6 +125,7 @@ function Index() {
         <SiteNavbar />
 
         <HeroSection />
+        <ContactStrip />
 
         <section className="border-b border-border/60 bg-secondary/35" id="about">
           <div className="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_1.05fr] lg:px-8 lg:py-24">
@@ -725,13 +726,13 @@ const heroFeatures = [
 function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-white">
-      {/* Grid: text column is max-w-7xl aligned; right column is a height placeholder only */}
-      <div className="mx-auto grid max-w-7xl items-center gap-0 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+      {/* Full-width grid: left text col + right image col that goes to screen edge */}
+      <div className="hidden lg:grid lg:grid-cols-2 lg:items-stretch" style={{ minHeight: 560 }}>
 
-        {/* Left: text content */}
-        <div className="py-14 pr-0 lg:py-24 lg:pr-10">
+        {/* Left: text content — padded from left edge */}
+        <div className="flex flex-col justify-center py-20 pl-10 pr-10 xl:pl-16">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-widest text-[#1a56db]">
+          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-widest text-[#1a56db]">
             <BadgeCheck className="h-3.5 w-3.5" />
             Eureka Forbes Authorised Service Centre
           </div>
@@ -783,29 +784,80 @@ function HeroSection() {
           </div>
         </div>
 
-        {/* Height placeholder — keeps the grid tall; the real image is below */}
-        <div className="hidden min-h-[560px] lg:block" />
+        {/* Right: hero image — flush to the right edge of the screen */}
+        <div className="relative overflow-hidden">
+          <img
+            src={heroDesktop}
+            alt="Janhavi Enterprises technician installing an Aquaguard water purifier"
+            className="absolute inset-0 h-full w-full object-cover object-left"
+            loading="eager"
+          />
+          {/* subtle left fade to merge with white bg */}
+          <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent" />
+        </div>
       </div>
 
-      {/* Desktop image: absolutely positioned, starts at 50% (= right edge of left column)
-          and extends all the way to the right viewport edge — no max-w constraint */}
-      <div className="absolute inset-y-0 left-[50%] right-0 hidden lg:block">
-        <img
-          src={heroDesktop}
-          alt="Janhavi Enterprises technician installing an Aquaguard water purifier"
-          className="h-full w-full object-cover object-center"
-          loading="eager"
-        />
-        {/* fade blends the image into the white text column */}
-        <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent" />
-      </div>
-
-      {/* Mobile image strip */}
+      {/* Mobile layout */}
       <div className="lg:hidden">
+        <div className="px-4 py-10 sm:px-6">
+          {/* Badge */}
+          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-widest text-[#1a56db]">
+            <BadgeCheck className="h-3.5 w-3.5" />
+            Eureka Forbes Authorised Service Centre
+          </div>
+
+          {/* Headline */}
+          <h1 className="mt-5 text-[2.2rem] font-extrabold leading-[1.1] tracking-tight text-slate-900">
+            Delivering Purity,{" "}
+            <span className="text-[#1a56db]">Ensuring Quality</span>
+          </h1>
+
+          {/* Sub-copy */}
+          <p className="mt-4 text-base leading-7 text-slate-500">
+            Janhavi Enterprises helps homes and businesses choose, install, and maintain
+            Aquaguard and Eureka Forbes products with owner-led support, genuine filters, and
+            fast local service across Ahilyanagar.
+          </p>
+
+          {/* CTA row */}
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <a
+              href="#services"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#1a56db] px-6 py-3 text-sm font-bold text-white shadow-md"
+            >
+              <Wrench className="h-4 w-4" />
+              Explore services
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-6 py-3 text-sm font-bold text-slate-700 shadow-sm"
+            >
+              <Calendar className="h-4 w-4" />
+              Book installation
+            </a>
+          </div>
+
+          {/* Trust badges */}
+          <div className="mt-7 flex flex-wrap items-center gap-3">
+            {heroFeatures.map(({ icon: Icon, title, bgColor, iconColor }) => (
+              <div
+                key={title}
+                className="flex items-center gap-2.5 rounded-full border border-slate-100 bg-white px-3.5 py-2 shadow-sm"
+              >
+                <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full ${bgColor}`}>
+                  <Icon className={`h-4 w-4 ${iconColor}`} strokeWidth={2.2} />
+                </span>
+                <span className="text-[12.5px] font-semibold text-slate-700">{title}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Mobile hero image strip */}
         <img
           src={heroMobile}
           alt="Janhavi Enterprises Aquaguard service"
-          className="h-56 w-full object-cover object-top sm:h-72"
+          className="h-56 w-full object-cover object-center sm:h-72"
           loading="eager"
         />
       </div>
@@ -813,6 +865,96 @@ function HeroSection() {
   );
 }
 
+function ContactStrip() {
+  return (
+    <div className="border-y border-slate-100 bg-white shadow-sm">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-4 py-5 sm:flex-row sm:items-center sm:gap-0 sm:divide-x sm:divide-slate-100">
+
+          {/* Label */}
+          <div className="flex items-start gap-3 sm:pr-8">
+            <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-blue-50 text-[#1a56db]">
+              <Phone className="h-4 w-4" />
+            </span>
+            <div>
+              <p className="text-sm font-bold text-slate-900">Talk to Janhavi Enterprises</p>
+              <p className="mt-0.5 text-xs text-slate-500 max-w-[180px]">
+                Call, WhatsApp, or visit. Open every day 9 AM – 9 PM.
+              </p>
+            </div>
+          </div>
+
+          {/* Primary phone */}
+          <a
+            href="tel:+919834085883"
+            className="group flex items-center gap-2.5 sm:px-8 transition-colors hover:text-[#1a56db]"
+          >
+            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-blue-50 text-[#1a56db] transition-colors group-hover:bg-[#1a56db] group-hover:text-white">
+              <Phone className="h-3.5 w-3.5" />
+            </span>
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">Primary</p>
+              <p className="text-sm font-bold text-slate-800 group-hover:text-[#1a56db]">+91 98340 85883</p>
+            </div>
+          </a>
+
+          {/* Alternate phone */}
+          <a
+            href="tel:+917218142702"
+            className="group flex items-center gap-2.5 sm:px-8 transition-colors hover:text-[#1a56db]"
+          >
+            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-blue-50 text-[#1a56db] transition-colors group-hover:bg-[#1a56db] group-hover:text-white">
+              <Phone className="h-3.5 w-3.5" />
+            </span>
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">Alternate</p>
+              <p className="text-sm font-bold text-slate-800 group-hover:text-[#1a56db]">+91 72181 42702</p>
+            </div>
+          </a>
+
+          {/* WhatsApp */}
+          <a
+            href="https://wa.me/919834085883"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-2.5 sm:px-8 transition-colors"
+          >
+            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-emerald-50 text-[#25D366] transition-colors group-hover:bg-[#25D366] group-hover:text-white">
+              <MessageCircle className="h-3.5 w-3.5" />
+            </span>
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">Fastest reply</p>
+              <p className="text-sm font-bold text-slate-800 group-hover:text-[#25D366]">Chat on WhatsApp</p>
+            </div>
+          </a>
+
+          {/* Hours */}
+          <div className="flex items-center gap-2.5 sm:px-8">
+            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-blue-50 text-[#1a56db]">
+              <Clock className="h-3.5 w-3.5" />
+            </span>
+            <div>
+              <p className="text-sm font-bold text-slate-800">9 AM – 9 PM</p>
+              <p className="text-xs text-slate-400">All days · Walk-ins welcome</p>
+            </div>
+          </div>
+
+          {/* Location */}
+          <div className="flex items-center gap-2.5 sm:pl-8">
+            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-blue-50 text-[#1a56db]">
+              <MapPin className="h-3.5 w-3.5" />
+            </span>
+            <div>
+              <p className="text-sm font-bold text-slate-800">Ahilyanagar, MH</p>
+              <p className="text-xs text-slate-400">City &amp; surrounding districts</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+}
 function FloatingContact() {
   return (
     <div className="fixed bottom-5 right-4 z-50 flex flex-col gap-3 sm:bottom-6 sm:right-6 md:hidden print:hidden">
@@ -842,7 +984,7 @@ function SiteNavbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white shadow-sm">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6 lg:px-8">
+      <div className="flex w-full items-center justify-between gap-4 px-4 py-3.5 sm:px-6 lg:px-10">
         {/* Logo */}
         <a href="#" className="group flex min-w-0 items-center gap-2.5">
           <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#1a56db] shadow-md transition-transform duration-300 group-hover:scale-105">
@@ -909,7 +1051,7 @@ function SiteNavbar() {
       <div
         className={`lg:hidden overflow-hidden border-t border-slate-100 bg-white transition-[max-height,opacity] duration-300 ease-out ${open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
       >
-        <nav className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
+        <nav className="w-full px-4 py-3 sm:px-6 lg:px-10">
           <ul className="grid gap-0.5">
             {navLinks.map((link) => (
               <li key={link.href}>
