@@ -128,7 +128,7 @@ function Index() {
         <ContactStrip />
 
         <section className="border-b border-border/60 bg-secondary/35" id="about">
-          <div className="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_1.05fr] lg:px-8 lg:py-24">
+          <div className="w-full grid gap-8 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_1.05fr] lg:px-8 xl:px-16 lg:py-24">
             <div className="overflow-hidden rounded-[calc(var(--radius)+18px)] border border-border/70 bg-card shadow-[var(--shadow-card)]">
               <img
                 src={storeImage}
@@ -139,16 +139,16 @@ function Index() {
             </div>
             <div className="flex flex-col justify-center">
               <p className="section-kicker">About us</p>
-              <h2 className="section-title mt-4 max-w-2xl">
+              <h2 className="section-title mt-4 max-w-4xl">
                 Ahilyanagar's Most Trusted Water Purifier Experts
               </h2>
-              <p className="mt-5 max-w-2xl text-base leading-8 text-muted-foreground">
+              <p className="mt-5 max-w-2xl lg:max-w-none text-base leading-8 text-muted-foreground">
                 Janhavi Enterprises has been serving Ahilyanagar and surrounding districts for
                 over 20 years. As an Eureka Forbes Authorised Service Centre, we provide genuine
                 parts, certified technicians, and reliable after-sales support for all major
                 water purifier brands.
               </p>
-              <p className="mt-4 max-w-2xl text-base leading-8 text-muted-foreground">
+              <p className="mt-4 max-w-2xl lg:max-w-none text-base leading-8 text-muted-foreground">
                 Our mission is simple — deliver pure water and complete peace of mind to every
                 household and business we serve.
               </p>
@@ -175,11 +175,11 @@ function Index() {
         </section>
 
         <section className="border-b border-border/60 bg-secondary/25" id="products">
-          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-            <div className="max-w-3xl">
+          <div className="w-full px-4 py-16 sm:px-6 lg:px-8 xl:px-16 lg:py-24">
+            <div>
               <p className="section-kicker">Water filter models</p>
               <div className="mt-4 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-                <h2 className="section-title max-w-2xl">
+                <h2 className="section-title max-w-4xl">
                   Scroll through a curated range of Aquaguard purifier models.
                 </h2>
                 <p className="max-w-xl text-sm leading-7 text-muted-foreground">
@@ -227,8 +227,8 @@ function Index() {
         </section>
 
         <section className="border-b border-border/60 bg-background" id="services">
-          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-            <div className="max-w-3xl">
+          <div className="w-full px-4 py-16 sm:px-6 lg:px-8 xl:px-16 lg:py-24">
+            <div>
               <p className="section-kicker">Our services</p>
               <h2 className="section-title mt-4">End-to-end water purifier care</h2>
               <p className="mt-4 text-base leading-7 text-muted-foreground">
@@ -257,13 +257,13 @@ function Index() {
         </section>
 
         <section className="border-b border-border/60 bg-secondary/30" id="robot-cleaners">
-          <div className="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,1.05fr)_0.95fr] lg:px-8 lg:py-24">
+          <div className="w-full grid gap-8 px-4 py-16 sm:px-6 lg:grid-cols-[minmax(0,1.05fr)_0.95fr] lg:px-8 xl:px-16 lg:py-24">
             <div className="flex flex-col justify-center">
               <p className="section-kicker">Robot cleaner section</p>
-              <h2 className="section-title mt-4 max-w-2xl">
+              <h2 className="section-title mt-4 max-w-4xl">
                 Smart cleaning robots deserve their own premium showcase.
               </h2>
-              <p className="mt-5 max-w-2xl text-base leading-8 text-muted-foreground">
+              <p className="mt-5 max-w-2xl lg:max-w-none text-base leading-8 text-muted-foreground">
                 Since you also provide robot cleaner selling and service, this section separates
                 the category from water systems and gives it the same premium treatment. That makes
                 the homepage clearer for users and much easier for search engines to understand.
@@ -293,7 +293,7 @@ function Index() {
         </section>
 
         <section className="border-b border-border/60 bg-background" id="parts">
-          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+          <div className="w-full px-4 py-16 sm:px-6 lg:px-8 xl:px-16 lg:py-24">
             <div className="grid gap-8 lg:grid-cols-[0.92fr_minmax(0,1.08fr)]">
               <div className="space-y-6">
                 <div className="overflow-hidden rounded-[calc(var(--radius)+18px)] border border-border/70 bg-card shadow-[var(--shadow-card)]">
@@ -315,10 +315,10 @@ function Index() {
               </div>
               <div className="flex flex-col justify-center">
                 <p className="section-kicker">Parts and filter education</p>
-                <h2 className="section-title mt-4 max-w-2xl">
+                <h2 className="section-title mt-4 max-w-4xl">
                   Turn spare parts into a trust-building section, not just an image.
                 </h2>
-                <p className="mt-5 max-w-2xl text-base leading-8 text-muted-foreground">
+                <p className="mt-5 max-w-2xl lg:max-w-none text-base leading-8 text-muted-foreground">
                   This section explains why genuine replacement parts, filter stages, and complete
                   system care matter. It helps position Janhavi Enterprises as both a seller and a
                   knowledgeable service provider, which is stronger for conversions and better for
@@ -398,8 +398,8 @@ function Index() {
         </section>
 
         <section className="border-b border-border/60 bg-secondary/30" id="why-us">
-          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-            <div className="max-w-3xl">
+          <div className="w-full px-4 py-16 sm:px-6 lg:px-8 xl:px-16 lg:py-24">
+            <div>
               <p className="section-kicker">Why us</p>
               <h2 className="section-title mt-4">Why Choose Janhavi Enterprises?</h2>
             </div>
@@ -433,8 +433,8 @@ function Index() {
 function TestimonialsSection() {
   return (
     <section className="border-b border-border/60 bg-background" id="testimonials">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <div className="max-w-3xl">
+      <div className="w-full px-4 py-16 sm:px-6 lg:px-8 xl:px-16 lg:py-24">
+        <div>
           <p className="section-kicker">Testimonials</p>
           <h2 className="section-title mt-4">What Our Customers Say</h2>
           <p className="mt-4 text-base leading-7 text-muted-foreground">
@@ -508,7 +508,7 @@ function BookingSection() {
 
   return (
     <section className="border-b border-border/60 bg-secondary/30" id="book-now">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+      <div className="w-full px-4 py-16 sm:px-6 lg:px-8 xl:px-16 lg:py-24">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="flex flex-col justify-center">
             <p className="section-kicker">Book now</p>
@@ -602,7 +602,7 @@ function BookingSection() {
 function SiteFooter() {
   return (
     <footer className="bg-foreground text-background">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <div className="w-full px-4 py-16 sm:px-6 lg:px-8 xl:px-16">
         <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr_1fr_1.1fr]">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-background/60">Janhavi Enterprises</p>
@@ -730,7 +730,7 @@ function HeroSection() {
       <div className="hidden lg:grid lg:grid-cols-2 lg:items-stretch" style={{ minHeight: 560 }}>
 
         {/* Left: text content — padded from left edge */}
-        <div className="flex flex-col justify-center py-20 pl-10 pr-10 xl:pl-16">
+        <div className="flex flex-col justify-center py-20 px-6 sm:px-8 lg:pl-8 xl:pl-16 lg:pr-10">
           {/* Badge */}
           <div className="inline-flex w-fit items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-widest text-[#1a56db]">
             <BadgeCheck className="h-3.5 w-3.5" />
@@ -799,7 +799,7 @@ function HeroSection() {
 
       {/* Mobile layout */}
       <div className="lg:hidden">
-        <div className="px-4 py-10 sm:px-6">
+        <div className="px-4 py-10 sm:px-6 lg:px-8 xl:px-16">
           {/* Badge */}
           <div className="inline-flex w-fit items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-widest text-[#1a56db]">
             <BadgeCheck className="h-3.5 w-3.5" />
@@ -868,7 +868,7 @@ function HeroSection() {
 function ContactStrip() {
   return (
     <div className="border-y border-slate-100 bg-white shadow-sm">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-16">
         <div className="flex flex-col gap-4 py-5 sm:flex-row sm:items-center sm:gap-0 sm:divide-x sm:divide-slate-100">
 
           {/* Label */}
@@ -984,7 +984,7 @@ function SiteNavbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white shadow-sm">
-      <div className="flex w-full items-center justify-between gap-4 px-4 py-3.5 sm:px-6 lg:px-10">
+      <div className="flex w-full items-center justify-between gap-4 px-4 py-3.5 sm:px-6 lg:px-8 xl:px-16">
         {/* Logo */}
         <a href="#" className="group flex min-w-0 items-center gap-2.5">
           <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#1a56db] shadow-md transition-transform duration-300 group-hover:scale-105">
@@ -1051,7 +1051,7 @@ function SiteNavbar() {
       <div
         className={`lg:hidden overflow-hidden border-t border-slate-100 bg-white transition-[max-height,opacity] duration-300 ease-out ${open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
       >
-        <nav className="w-full px-4 py-3 sm:px-6 lg:px-10">
+        <nav className="w-full px-4 py-3 sm:px-6 lg:px-8 xl:px-16">
           <ul className="grid gap-0.5">
             {navLinks.map((link) => (
               <li key={link.href}>
