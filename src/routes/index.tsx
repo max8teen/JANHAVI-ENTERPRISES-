@@ -289,27 +289,19 @@ function Index() {
           </div>
         </section>
 
-        <section className="relative overflow-hidden border-b border-border/60" id="parts" style={{ minHeight: "min(70vh, 560px)" }}>
-          {/* Full-bleed background image — no padding, no margin */}
+        <section className="border-b border-border/60 bg-background" id="parts">
+          {/* Heading above image — same style as other sections */}
+          <div className="w-full px-4 pt-16 pb-10 sm:px-6 lg:px-8 xl:px-16 lg:pt-24 lg:pb-12">
+            <p className="section-kicker">Water purification</p>
+            <h2 className="section-title mt-4">Why Water Purification Is Important</h2>
+          </div>
+          {/* Full image — block, w-full, no height/crop constraints at all */}
           <img
             src={partsPoster}
-            alt="Why water purification matters"
-            className="absolute inset-0 h-full w-full object-cover object-center"
+            alt="Why water purification is important"
+            className="block w-full"
             loading="lazy"
           />
-          {/* Dark overlay for text legibility */}
-          <div className="absolute inset-0 bg-black/55" />
-          {/* Heading — same layout style as services section */}
-          <div className="relative z-10 flex h-full items-end px-4 pb-12 sm:px-6 sm:pb-16 lg:px-8 xl:px-16 lg:pb-20" style={{ minHeight: "inherit" }}>
-            <div>
-              <p className="section-kicker" style={{ WebkitBackgroundClip: "unset", backgroundClip: "unset", backgroundImage: "none", color: "rgba(255,255,255,0.75)" }}>
-                Water purification
-              </p>
-              <h2 className="section-title mt-4 text-white drop-shadow-md">
-                Why Water Purification Is Important
-              </h2>
-            </div>
-          </div>
         </section>
 
         <section className="border-b border-border/60 bg-secondary/30" id="why-us">
