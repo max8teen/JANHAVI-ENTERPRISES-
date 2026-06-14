@@ -767,14 +767,17 @@ const heroFeatures = [
 
 function HeroSection() {
   return (
-    <section className="relative w-full overflow-hidden" style={{ minHeight: "min(90vh, 680px)" }}>
+    <section className="relative w-full overflow-hidden" style={{ minHeight: "min(95vh, 760px)" }}>
 
-      {/* Background image */}
+      {/* Background image
+          Desktop: object-right (man on right, text on left)
+          Mobile:  object-[60%_center] — shifts slightly left so both man + filter are visible */}
       <img
         src={heroDesktop}
         alt=""
         aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover object-right"
+        className="absolute inset-0 h-full w-full object-cover lg:object-right"
+        style={{ objectPosition: "60% center" }}
         loading="eager"
       />
 
@@ -786,12 +789,12 @@ function HeroSection() {
             "linear-gradient(to right, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.92) 28%, rgba(255,255,255,0.7) 48%, rgba(255,255,255,0.15) 65%, rgba(255,255,255,0) 80%)",
         }}
       />
-      {/* Mobile gradient: strong white bottom half so text is readable */}
+      {/* Mobile gradient: transparent top (man fully visible) → white from 58% down (text area) */}
       <div
         className="absolute inset-0 lg:hidden"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 35%, rgba(255,255,255,0.92) 55%, rgba(255,255,255,0.98) 70%, rgba(255,255,255,1) 85%)",
+            "linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.95) 63%, rgba(255,255,255,1) 72%)",
         }}
       />
 
@@ -837,7 +840,7 @@ function HeroSection() {
       {/* ── MOBILE layout ── */}
       <div className="relative z-10 flex h-full flex-col lg:hidden" style={{ minHeight: "inherit" }}>
 
-        {/* Badge — top of screen */}
+        {/* Badge — pinned top */}
         <div className="px-5 pt-5">
           <div className="inline-flex w-fit items-center gap-2 rounded-full border border-blue-100 bg-blue-50/90 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-widest text-[#1a56db] backdrop-blur-sm">
             <BadgeCheck className="h-3.5 w-3.5" />
@@ -845,35 +848,36 @@ function HeroSection() {
           </div>
         </div>
 
-        {/* Spacer pushes content to bottom half */}
-        <div className="flex-1" />
+        {/* Large spacer — image (man) occupies top ~58%, content below */}
+        <div style={{ flex: "0 0 52%" }} />
 
-        {/* Content — bottom half, centered */}
+        {/* Content starts at ~58% down — heading, para, buttons, badges */}
         <div className="flex flex-col items-center px-5 pb-8 text-center">
-          <h1 className="text-[2rem] font-extrabold leading-[1.1] tracking-tight text-slate-900">
-            Delivering Purity,{" "}
+          {/* Heading forced to two lines: "Delivering Purity," then "Ensuring Quality" */}
+          <h1 className="text-[1.85rem] font-extrabold tracking-tight text-slate-900" style={{ lineHeight: 1.15 }}>
+            Delivering Purity,<br />
             <span className="text-[#1a56db]">Ensuring Quality</span>
           </h1>
-          <p className="mt-4 text-sm leading-6 text-slate-700">
+          <p className="mt-3 text-sm leading-6 text-slate-700">
             Janhavi Enterprises helps homes and businesses choose, install, and maintain
             Aquaguard and Eureka Forbes products with owner-led support, genuine filters, and
             fast local service across Ahilyanagar.
           </p>
           {/* Buttons — full width, stacked */}
-          <div className="mt-6 flex w-full flex-col gap-3">
-            <a href="#services" className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#1a56db] px-6 py-3.5 text-sm font-bold text-white shadow-md">
+          <div className="mt-5 flex w-full flex-col gap-3">
+            <a href="#services" className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#1a56db] px-6 py-3.5 text-sm font-bold text-white shadow-md active:scale-95">
               <Wrench className="h-4 w-4" />
               Explore services
             </a>
-            <a href="#contact" className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white/85 px-6 py-3.5 text-sm font-bold text-slate-700 shadow-sm backdrop-blur-sm">
+            <a href="#contact" className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white/90 px-6 py-3.5 text-sm font-bold text-slate-700 shadow-sm backdrop-blur-sm active:scale-95">
               <Calendar className="h-4 w-4" />
               Book installation
             </a>
           </div>
-          {/* Trust badges — centered */}
-          <div className="mt-6 flex flex-col items-center gap-2.5 w-full">
+          {/* Trust badges — centered, stacked */}
+          <div className="mt-5 flex flex-col items-center gap-2.5 w-full">
             {heroFeatures.map(({ icon: Icon, title, bgColor, iconColor }) => (
-              <div key={title} className="flex items-center gap-2.5 rounded-full border border-slate-100 bg-white/85 px-4 py-2 shadow-sm backdrop-blur-sm">
+              <div key={title} className="flex items-center gap-2.5 rounded-full border border-slate-100 bg-white/90 px-4 py-2 shadow-sm backdrop-blur-sm">
                 <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full ${bgColor}`}>
                   <Icon className={`h-4 w-4 ${iconColor}`} strokeWidth={2.2} />
                 </span>
