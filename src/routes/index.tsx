@@ -767,7 +767,7 @@ const heroFeatures = [
 
 function HeroSection() {
   return (
-    <section className="relative w-full overflow-hidden" style={{ minHeight: "100svh" }}>
+    <section className="relative w-full overflow-hidden lg:min-h-[min(90vh,700px)]">
 
       {/* Background image
           Desktop: anchored right (text left, man right)
@@ -788,17 +788,17 @@ function HeroSection() {
             "linear-gradient(to right, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.92) 28%, rgba(255,255,255,0.7) 48%, rgba(255,255,255,0.15) 65%, rgba(255,255,255,0) 80%)",
         }}
       />
-      {/* Mobile gradient: top 50% fully clear (man visible), white fades in from 55% */}
+      {/* Mobile gradient: clear until 52%, then white from 62% */}
       <div
         className="absolute inset-0 lg:hidden"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 48%, rgba(255,255,255,0.9) 60%, rgba(255,255,255,1) 68%)",
+            "linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 56%, rgba(255,255,255,0.92) 66%, rgba(255,255,255,1) 73%)",
         }}
       />
 
       {/* ── DESKTOP layout ── */}
-      <div className="relative z-10 hidden h-full lg:flex lg:items-center lg:px-8 xl:px-16" style={{ minHeight: "inherit" }}>
+      <div className="relative z-10 hidden lg:flex lg:items-center lg:px-8 xl:px-16" style={{ minHeight: "min(90vh, 700px)" }}>
         <div className="w-full max-w-xl">
           <div className="inline-flex w-fit items-center gap-2 rounded-full border border-blue-100 bg-blue-50/90 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-widest text-[#1a56db] backdrop-blur-sm">
             <BadgeCheck className="h-3.5 w-3.5" />
@@ -837,7 +837,7 @@ function HeroSection() {
       </div>
 
       {/* ── MOBILE layout ── */}
-      <div className="relative z-10 flex h-full flex-col lg:hidden" style={{ minHeight: "inherit" }}>
+      <div className="relative z-10 lg:hidden">
 
         {/* Badge — pinned top left */}
         <div className="px-5 pt-5">
@@ -847,21 +847,13 @@ function HeroSection() {
           </div>
         </div>
 
-        {/* Spacer — 50% so man is fully visible in top half */}
-        <div style={{ flex: "0 0 50%" }} />
-
-        {/* Content — LEFT aligned, starts from bottom half */}
-        <div className="flex flex-col items-start px-5 pb-8">
+        {/* Content pushed down with padding-top so man+filter shows above */}
+        <div className="flex flex-col items-start px-5 pb-8" style={{ paddingTop: "52vw" }}>
           <h1 className="text-[1.85rem] font-extrabold tracking-tight text-slate-900" style={{ lineHeight: 1.15 }}>
             Delivering Purity,<br />
             <span className="text-[#1a56db]">Ensuring Quality</span>
           </h1>
-          <p className="mt-3 text-sm leading-6 text-slate-700">
-            Janhavi Enterprises helps homes and businesses choose, install, and maintain
-            Aquaguard and Eureka Forbes products with owner-led support, genuine filters, and
-            fast local service across Ahilyanagar.
-          </p>
-          <div className="mt-5 flex w-full flex-col gap-3">
+          <div className="mt-4 flex w-full flex-col gap-3">
             <a href="#services" className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#1a56db] px-6 py-3.5 text-sm font-bold text-white shadow-md active:scale-95">
               <Wrench className="h-4 w-4" />
               Explore services
@@ -871,14 +863,13 @@ function HeroSection() {
               Book installation
             </a>
           </div>
-          {/* Trust badges — left aligned */}
-          <div className="mt-5 flex flex-col items-start gap-2.5 w-full">
+          <div className="mt-4 flex flex-col items-start gap-2 w-full">
             {heroFeatures.map(({ icon: Icon, title, bgColor, iconColor }) => (
-              <div key={title} className="flex items-center gap-2.5 rounded-full border border-slate-100 bg-white/90 px-4 py-2 shadow-sm backdrop-blur-sm">
-                <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full ${bgColor}`}>
-                  <Icon className={`h-4 w-4 ${iconColor}`} strokeWidth={2.2} />
+              <div key={title} className="flex items-center gap-2.5 rounded-full border border-slate-100 bg-white/90 px-3.5 py-1.5 shadow-sm backdrop-blur-sm">
+                <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full ${bgColor}`}>
+                  <Icon className={`h-3.5 w-3.5 ${iconColor}`} strokeWidth={2.2} />
                 </span>
-                <span className="text-[12.5px] font-semibold text-slate-700">{title}</span>
+                <span className="text-[12px] font-semibold text-slate-700">{title}</span>
               </div>
             ))}
           </div>
