@@ -853,6 +853,11 @@ function HeroSection() {
             Delivering Purity,<br />
             <span className="text-[#1a56db]">Ensuring Quality</span>
           </h1>
+          <p className="mt-3 text-sm leading-6 text-slate-700">
+            Janhavi Enterprises helps homes and businesses choose, install, and maintain
+            Aquaguard and Eureka Forbes products with owner-led support, genuine filters, and
+            fast local service across Ahilyanagar.
+          </p>
           <div className="mt-4 flex w-full flex-col gap-3">
             <a href="#services" className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#1a56db] px-6 py-3.5 text-sm font-bold text-white shadow-md active:scale-95">
               <Wrench className="h-4 w-4" />
